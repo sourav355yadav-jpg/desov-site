@@ -18,6 +18,24 @@ const PROJECTS: Record<string, {
   websiteLink?: string;
   next: string;
 }> = {
+  'keopi': {
+    name: 'Keopi',
+    services: [
+      { category: 'Brand Identity', items: ['Logo', 'Typography', 'Visual Language'] },
+      { category: 'Packaging', items: ['Coffee Bags', 'Banners', 'Merchandise'] },
+    ],
+    description: [
+      'Keopi is a modern, vibrant coffee brand focused on delivering high-quality brews with a playful and energetic aesthetic.',
+      'We designed a comprehensive brand identity and packaging system that stands out on the shelf, using bold colors, striking patterns, and engaging typography.',
+    ],
+    hero: '/projects/keopi_mockup_2_isometric_1781775402823.png',
+    gallery: [
+      '/projects/BANNER COFFEE.jpg',
+      '/projects/COFFEE HOLDER.jpg',
+      '/projects/circle mockup.png',
+    ],
+    next: 'bombay-canteen',
+  },
   'bombay-canteen': {
     name: 'Bombay Canteen',
     services: [
@@ -119,7 +137,7 @@ const PROJECTS: Record<string, {
     gallery: [
       '/projects/juicy_chemistry.png', 
     ],
-    next: 'bombay-canteen',
+    next: 'keopi',
   },
 };
 

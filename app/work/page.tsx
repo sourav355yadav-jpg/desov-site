@@ -9,12 +9,13 @@ import { useTextReveal, useScrollReveal } from '../components/animations';
 gsap.registerPlugin(ScrollTrigger);
 
 const PROJECTS = [
-  { name: 'Bombay Canteen', slug: 'bombay-canteen', num: '#01', image: '/projects/bombay_canteen_poster_one.png' },
-  { name: 'Sleepy Owl', slug: 'sleepy-owl', num: '#02', image: '/projects/sleepy_owl_poster_one.png' },
-  { name: 'Subko', slug: 'subko', num: '#03', image: '/projects/subko_poster_one.png' },
-  { name: 'Sol Sage', slug: 'sol-sage', num: '#04', image: '/projects/sol_sage_poster_one.png' },
-  { name: 'Pascati', slug: 'pascati-chocolate', num: '#05', image: '/projects/pascati_chocolate.png' },
-  { name: 'Svami Tonic', slug: 'svami-tonic', num: '#06', image: '/projects/svami_tonic.png' },
+  { name: 'Keopi', slug: 'keopi', num: '#01', image: '/projects/keopi_mockup_2_isometric_1781775402823.png' },
+  { name: 'Bombay Canteen', slug: 'bombay-canteen', num: '#02', image: '/projects/bombay_canteen_poster_one.png' },
+  { name: 'Sleepy Owl', slug: 'sleepy-owl', num: '#03', image: '/projects/sleepy_owl_poster_one.png' },
+  { name: 'Subko', slug: 'subko', num: '#04', image: '/projects/subko_poster_one.png' },
+  { name: 'Sol Sage', slug: 'sol-sage', num: '#05', image: '/projects/sol_sage_poster_one.png' },
+  { name: 'Pascati', slug: 'pascati-chocolate', num: '#06', image: '/projects/pascati_chocolate.png' },
+  { name: 'Svami Tonic', slug: 'svami-tonic', num: '#07', image: '/projects/svami_tonic.png' },
 ];
 
 export default function WorkPage() {

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -222,7 +223,7 @@ function ProjectHero({ project }: { project: typeof PROJECTS[string] }) {
         </div>
 
         <div ref={imageRef} style={{ borderRadius: '4px', overflow: 'hidden' }}>
-          <img src={project.hero} alt={project.name} style={{ width: '100%', display: 'block' }} loading="eager" />
+          <Image src={project.hero} alt={project.name} width={0} height={0} sizes="100vw" style={{ width: '100%', height: 'auto', display: 'block' }} priority />
         </div>
       </div>
     </section>
@@ -296,7 +297,7 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
         }}>
           {gallery.map((img, i) => (
             <div key={i} className="gallery-img" style={{ borderRadius: '4px', overflow: 'hidden' }}>
-              <img src={img} alt="" style={{ width: '100%', display: 'block' }} loading="lazy" />
+              <Image src={img} alt="" width={0} height={0} sizes="(max-width: 768px) 100vw, 50vw" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
           ))}
         </div>

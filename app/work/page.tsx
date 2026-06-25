@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTextReveal, useScrollReveal } from '../components/animations';
@@ -130,7 +131,7 @@ function ProjectsSection() {
             {PROJECTS.map((project) => (
               <Link key={project.slug} href={`/work/${project.slug}`}>
                 <div className="project-card" data-cursor-label="View">
-                  <img src={project.image} alt={project.name} loading="lazy" />
+                  <Image src={project.image} alt={project.name} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
                   <div className="project-card-overlay">
                     <span className="project-card-name">{project.name}</span>
                   </div>
@@ -155,8 +156,8 @@ function ProjectsSection() {
               </li>
             ))}
             {hoverImg && (
-              <img src={hoverImg.src} alt="" className="work-list-hover-img visible"
-                style={{ top: hoverImg.y, left: hoverImg.x }} />
+              <Image src={hoverImg.src} alt="" className="work-list-hover-img visible"
+                width={400} height={300} style={{ top: hoverImg.y, left: hoverImg.x, objectFit: 'cover' }} />
             )}
           </ul>
         )}

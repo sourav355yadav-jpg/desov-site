@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTextReveal, useScrollReveal, useParallax } from './components/animations';
@@ -12,12 +13,12 @@ gsap.registerPlugin(ScrollTrigger);
    PROJECT DATA
    ============================================================ */
 const PROJECTS = [
+  { name: 'Keopi', slug: 'keopi', image: '/projects/keopi_mockup_2_isometric_1781775402823.png' },
   { name: 'Bombay Canteen', slug: 'bombay-canteen', image: '/projects/bombay_canteen_poster_one.png' },
   { name: 'Sleepy Owl', slug: 'sleepy-owl', image: '/projects/sleepy_owl_poster_one.png' },
   { name: 'Subko', slug: 'subko', image: '/projects/subko_poster_one.png' },
   { name: 'Sol Sage', slug: 'sol-sage', image: '/projects/sol_sage_poster_one.png' },
   { name: 'Pascati', slug: 'pascati-chocolate', image: '/projects/pascati_chocolate.png' },
-  { name: 'Svami Tonic', slug: 'svami-tonic', image: '/projects/svami_tonic.png' },
 ];
 
 const SERVICES = [
@@ -219,11 +220,13 @@ function WorkSection() {
 
         {/* Hover Image */}
         {hoverImg && (
-          <img
+          <Image
             src={hoverImg.src}
             alt=""
             className="work-list-hover-img visible"
-            style={{ top: hoverImg.y, left: hoverImg.x }}
+            width={400}
+            height={300}
+            style={{ top: hoverImg.y, left: hoverImg.x, objectFit: 'cover' }}
           />
         )}
       </div>

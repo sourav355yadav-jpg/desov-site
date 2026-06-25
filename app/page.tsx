@@ -1,109 +1,370 @@
-import Image from "next/image";
+'use client';
 
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTextReveal, useScrollReveal, useParallax } from './components/animations';
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============================================================
+   PROJECT DATA
+   ============================================================ */
+const PROJECTS = [
+  { name: 'Bombay Canteen', slug: 'bombay-canteen', image: '/projects/bombay_canteen_poster_one.png' },
+  { name: 'Sleepy Owl', slug: 'sleepy-owl', image: '/projects/sleepy_owl_poster_one.png' },
+  { name: 'Subko', slug: 'subko', image: '/projects/subko_poster_one.png' },
+  { name: 'Sol Sage', slug: 'sol-sage', image: '/projects/sol_sage_poster_one.png' },
+  { name: 'Pascati', slug: 'pascati-chocolate', image: '/projects/pascati_chocolate.png' },
+  { name: 'Svami Tonic', slug: 'svami-tonic', image: '/projects/svami_tonic.png' },
+];
+
+const SERVICES = [
+  {
+    title: 'Brand\nIdentities',
+    tags: ['Logo', 'Typography', 'Color Palette', 'Voice & Tone', 'Guidelines'],
+    description: 'We craft comprehensive brand identity systems that establish the core DNA of your brand, ensuring flawless representation across every medium.',
+  },
+  {
+    title: 'Smart\nDevelopment',
+    tags: ['Web Development', 'App Development', 'UI/UX Design', 'Interactions', 'CMS'],
+    description: 'We build high-performance digital products with cutting-edge technology, delivering seamless user experiences across all platforms.',
+  },
+  {
+    title: 'Marketing\nCampaigns',
+    tags: ['Digital Marketing', 'SEO', 'Social Media', 'Content Creation', 'Email Marketing'],
+    description: 'Strategic marketing campaigns that amplify your brand presence and drive meaningful engagement with your target audience.',
+  },
+  {
+    title: '3D\nVisualization',
+    tags: ['Architecture', 'Engineering', 'Construction', 'Interior Design', 'Product Design'],
+    description: 'Photorealistic 3D visualization and animation that brings architectural and product concepts to life before they exist.',
+  },
+];
+
+/* ============================================================
+   HOME PAGE COMPONENT
+   ============================================================ */
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-white font-sans">
-      {/* Hero Section */}
-      <section className="relative flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/assets/ChatGPT_Image_May_13__2026__10_26_24_PM-removebg-preview.png')" }}>
-        <div className="bg-black bg-opacity-60 p-8 rounded-lg text-center max-w-2xl">
-          <p className="text-sm uppercase tracking-widest mb-2">BRAND IDENTITY FOR MARKET LEADERS</p>
-          <h1 className="text-5xl font-extrabold mb-4">WE BUILD BRANDS THAT COMMAND THE ROOM.</h1>
-          <p className="text-lg mb-6">Identity systems built for founders and executives who don't compete on price.</p>
-          <a href="#systems" className="inline-block bg-orange-600 hover:bg-orange-700 text-white py-3 px-6 rounded-full transition-colors">VIEW THE SYSTEMS</a>
+    <>
+      <HeroSection />
+      <WorkSection />
+      <ServicesSection />
+      <CTASection />
+    </>
+  );
+}
+
+/* ── HERO SECTION ── */
+function HeroSection() {
+  const heroRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const renderRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useTextReveal(titleRef, { delay: 0.3, stagger: 0.1, duration: 0.8 });
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 3D render fade in + scale
+      gsap.from('.hero-render-wrapper', {
+        opacity: 0,
+        scale: 1.05,
+        duration: 1.0,
+        ease: 'power2.out',
+        delay: 0.1,
+      });
+
+      // Scroll indicator fade in
+      gsap.from('.scroll-indicator', {
+        opacity: 0,
+        duration: 0.5,
+        delay: 0.9,
+      });
+
+      // Hero parallax on scroll
+      gsap.to('.hero-render-wrapper', {
+        y: () => window.innerHeight * -0.4,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      gsap.to('.hero-text-wrapper', {
+        y: () => window.innerHeight * -0.2,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      // Fade hero as scrolling
+      gsap.to(heroRef.current, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: '50% top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={heroRef} className="hero">
+      {/* 3D Render */}
+      <div className="hero-render-wrapper" style={{
+        position: 'absolute', top: '50%', left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '70vw', maxWidth: '1200px',
+        zIndex: 1, pointerEvents: 'none',
+      }}>
+        <div style={{
+          width: '100%', aspectRatio: '16/10',
+          background: 'radial-gradient(ellipse at 40% 40%, rgba(221,167,165,0.15) 0%, transparent 60%), radial-gradient(ellipse at 60% 60%, rgba(221,167,165,0.08) 0%, transparent 50%)',
+          borderRadius: '20px',
+          filter: 'blur(0.5px)',
+        }}>
+          <div style={{
+            width: '60%', height: '70%', margin: 'auto',
+            position: 'relative', top: '15%',
+            background: 'linear-gradient(135deg, #F1E9DA, #DFCEC1, #DDA7A5)',
+            borderRadius: '12px',
+            boxShadow: '0 40px 80px rgba(42,37,34,0.15), 0 0 60px rgba(221,167,165,0.1)',
+            transform: 'perspective(800px) rotateY(-5deg) rotateX(3deg)',
+          }} />
         </div>
-      </section>
+      </div>
 
-      {/* Scroll Reveal Intro */}
-      <section className="py-20 px-8 text-center max-w-3xl mx-auto">
-        <p className="text-xl">Aesthetic is not enough. To dominate a market, a brand requires structural integrity. At DESOV, we engineer high‑contrast, scalable identity systems that force your competitors into the background. You bring the vision; we build the architecture.</p>
-      </section>
+      {/* Hero Text */}
+      <div className="hero-content hero-text-wrapper">
+        <h1 ref={titleRef} className="hero-title">
+          Your story builds our history.
+        </h1>
+      </div>
 
-      {/* Capabilities */}
-      <section id="systems" className="py-20 bg-gray-800">
-        <div className="max-w-6xl mx-auto px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">OUR CAPABILITIES</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gray-700 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Identity Architecture</h3>
-              <p>We don't just draw logos; we build comprehensive visual systems. From typographic hierarchy to color theory, we establish the core DNA of your brand so it remains flawless across every medium.</p>
-            </div>
-            <div className="bg-gray-700 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Packaging & Spatial</h3>
-              <p>Physical touchpoints that demand to be held. We design premium packaging for independent labels—like Earth‑Brew and Brew Bud—that dominate retail shelves and elevate the unboxing experience.</p>
-            </div>
-            <div className="bg-gray-700 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Immersive Digital</h3>
-              <p>Your website is your digital flagship. We combine modern WebGL, 3D motion, and brutalist typography to engineer web experiences that command attention and refuse to be ignored.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Scroll Indicator */}
+      <div className="scroll-indicator" ref={scrollRef}>
+        Scroll
+      </div>
+    </section>
+  );
+}
 
-      {/* Work / Portfolio */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-white">ENGINEERED SYSTEMS</h2>
-          <p className="text-center mb-8 text-gray-300">A select archive of identities built for market disruption.</p>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="group relative overflow-hidden rounded-lg shadow-lg">
-              <Image src="/assets/earth brew/placeholder.jpg" alt="Earth Brew" width={600} height={400} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <h3 className="text-xl font-semibold mb-2">Earth‑Brew Coffee Roasters</h3>
-                <p className="text-center px-4">Stripping away the noise of the organic coffee market to create a stark, premium package that owns the shelf.</p>
-                <a href="#" className="mt-4 inline-block bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded">INSPECT PROJECT</a>
+/* ── WORK SECTION ── */
+function WorkSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [hoverImg, setHoverImg] = useState<{ src: string; x: number; y: number } | null>(null);
+
+  useTextReveal(titleRef);
+  useScrollReveal(subtitleRef, { y: 20 });
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.work-list-item', {
+        opacity: 0,
+        x: -30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: listRef.current, start: 'top 85%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent, image: string) => {
+    setHoverImg({ src: image, x: e.clientX + 20, y: e.clientY - 130 });
+  };
+
+  return (
+    <section ref={sectionRef} className="section" style={{ background: 'var(--bg-primary)' }}>
+      <div className="container">
+        <h2 ref={titleRef} className="section-title">Work</h2>
+        <p ref={subtitleRef} className="section-subtitle" style={{ marginBottom: '60px' }}>
+          We are a diligent team, that&apos;s passionate about turning ideas into digital realities.
+        </p>
+
+        <ul ref={listRef} className="work-list">
+          {PROJECTS.map((project) => (
+            <li key={project.slug} className="work-list-item">
+              <Link
+                href={`/work/${project.slug}`}
+                className="work-list-link"
+                data-cursor-label="View"
+                onMouseMove={(e) => handleMouseMove(e, project.image)}
+                onMouseLeave={() => setHoverImg(null)}
+              >
+                <span>{project.name}</span>
+                <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Hover Image */}
+        {hoverImg && (
+          <img
+            src={hoverImg.src}
+            alt=""
+            className="work-list-hover-img visible"
+            style={{ top: hoverImg.y, left: hoverImg.x }}
+          />
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ── SERVICES SECTION ── */
+function ServicesSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  useTextReveal(titleRef);
+  useScrollReveal(subtitleRef, { y: 20 });
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.service-item', {
+        opacity: 0,
+        y: 40,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: '.service-item', start: 'top 85%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="section" style={{ background: 'var(--bg-secondary)' }}>
+      <div className="container">
+        <h2 ref={titleRef} className="section-title">Services</h2>
+        <p ref={subtitleRef} className="section-subtitle" style={{ marginBottom: '60px' }}>
+          We are an unusual digital agency focusing on transforming your vision into a captivating digital experience.
+        </p>
+
+        <div>
+          {SERVICES.map((service, i) => (
+            <div
+              key={i}
+              className={`service-item ${activeIndex === i ? 'active' : ''}`}
+            >
+              <div
+                className="service-header"
+                onClick={() => setActiveIndex(activeIndex === i ? null : i)}
+              >
+                <span className="service-title" style={{ whiteSpace: 'pre-line' }}>
+                  {service.title}
+                </span>
+                <span className="service-toggle">+</span>
+              </div>
+              <div className="service-body">
+                <div className="service-tags">
+                  {service.tags.map((tag) => (
+                    <span key={tag} className="service-tag">{tag}</span>
+                  ))}
+                </div>
+                <p style={{ color: 'var(--text-muted)', lineHeight: '1.7', maxWidth: '600px' }}>
+                  {service.description}
+                </p>
               </div>
             </div>
-            {/* Additional project placeholders can be added here */}
-            <div className="bg-gray-700 h-64 flex items-center justify-center rounded-lg">
-              <span className="text-gray-400">Additional project placeholder</span>
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* About / Agency */}
-      <section className="py-20 bg-gray-800">
-        <div className="max-w-4xl mx-auto px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-white">THE ARCHITECT</h2>
-          <h3 className="text-2xl font-semibold mb-6 text-gray-200">DESIGNED BY DISCIPLINE.</h3>
-          <p className="text-lg text-gray-300 mb-6">
-            DESOV is an independent brand identity practice founded by Sourav Yadav.
-          </p>
-          <p className="text-lg text-gray-300">
-            We operate on a simple principle: good design is invisible, but great design is undeniable. We partner exclusively with ambitious founders who understand that brand perception dictates market value. By merging raw, brutalist aesthetics with highly disciplined typographic structures, we don't just help you compete—we help you set the standard.
-          </p>
-        </div>
-      </section>
+/* ── CTA SECTION ── */
+function CTASection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
-      {/* Contact / Inquire */}
-      <section className="py-20 bg-gray-900">
-        <div className="max-w-2xl mx-auto px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-white">INITIATE A PROJECT</h2>
-          <h3 className="text-2xl font-semibold mb-6 text-gray-200">READY TO COMMAND YOUR MARKET?</h3>
-          <p className="text-gray-300 mb-8">We take on a strictly limited number of projects per quarter to ensure absolute focus. If you are ready to build an uncompromising identity, submit your brief below.</p>
-          <form className="grid gap-4 text-left">
-            <input type="text" placeholder="Name / Title" className="bg-gray-800 border border-gray-600 rounded p-2" />
-            <input type="text" placeholder="Company / Label" className="bg-gray-800 border border-gray-600 rounded p-2" />
-            <select className="bg-gray-800 border border-gray-600 rounded p-2">
-              <option>Brand Identity</option>
-              <option>Packaging</option>
-              <option>Full Digital Rollout</option>
-            </select>
-            <select className="bg-gray-800 border border-gray-600 rounded p-2">
-              <option>$5k+</option>
-              <option>$10k+</option>
-              <option>$20k+</option>
-            </select>
-            <textarea placeholder="Project Details" rows={4} className="bg-gray-800 border border-gray-600 rounded p-2"></textarea>
-            <button type="submit" className="bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-full transition-colors">SUBMIT BRIEF</button>
-          </form>
-        </div>
-      </section>
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Character-split animation for "Don't be shy"
+      const el = titleRef.current;
+      if (!el) return;
+      const text = el.textContent || '';
+      el.innerHTML = text
+        .split('')
+        .map(
+          (char) =>
+            `<span style="overflow:hidden;display:inline-block"><span class="char-inner" style="display:inline-block;transform:translateY(100%);opacity:0">${char === ' ' ? '&nbsp;' : char}</span></span>`
+        )
+        .join('');
 
-      {/* Footer */}
-      <footer className="py-8 text-center text-gray-500 bg-gray-950">
-        <p>© {new Date().getFullYear()} Desov Studio. All rights reserved.</p>
-      </footer>
-    </div>
+      gsap.to(el.querySelectorAll('.char-inner'), {
+        y: '0%',
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.03,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 75%',
+        },
+      });
+
+      // CTA buttons fade in
+      gsap.from('.cta-buttons', {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        delay: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 75%',
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="cta-section">
+      {/* Chair Render Placeholder */}
+      <div className="cta-render" style={{
+        width: '40vw', maxWidth: '500px', aspectRatio: '1',
+        background: 'radial-gradient(circle, rgba(221,167,165,0.12) 0%, transparent 70%)',
+        borderRadius: '50%',
+      }} />
+
+      <h2 ref={titleRef} className="cta-title" style={{ position: 'relative', zIndex: 1 }}>
+        Don&apos;t be shy
+      </h2>
+
+      <div className="cta-buttons">
+        <Link href="/contact" className="btn-primary">
+          Chat with Desov
+        </Link>
+        <a href="#" className="btn-outline" target="_blank" rel="noopener noreferrer">
+          Book a Meeting
+        </a>
+      </div>
+    </section>
   );
 }

@@ -1,0 +1,426 @@
+SOHUB DIGITAL
+COMPLETE WEBSITE REVERSE-ENGINEERING BLUEPRINT
+sohub.digital  ·  Comprehensive Study for Replica Build
+Version 1.0  ·  June 2026
+____________________________________________________________
+
+TABLE OF CONTENTS
+1.  Tech Stack & Architecture
+2.  Global Design System
+3.  Global Components (Navbar · Cursor · Footer · Page Transitions)
+4.  HOME PAGE — Full Breakdown
+5.  STUDIO PAGE — Full Breakdown
+6.  WORK PAGE — Full Breakdown
+7.  CONTACT PAGE — Full Breakdown
+8.  PROJECT PAGE TEMPLATE — Full Breakdown
+9.  CAREERS SUB-PAGES
+10. Animation Master Reference
+11. Asset URLs Reference
+
+1. TECH STACK & ARCHITECTURE
+____________________________________________________________
+Framework & Routing
+Next.js 14 (App Router or Pages Router — uses _next/image, standard SSG/SSR)
+React 18 with functional components and hooks
+File-based routing: /, /studio, /work, /work/[slug], /contact, /careers/[role]
+TypeScript (highly likely given the Awwwards-level build quality)
+CMS
+Sanity.io — headless CMS for all project/work content
+Project images served from: cdn.sanity.io/images/9xh2olrq/production/
+Dataset ID: 9xh2olrq (visible in all Sanity image URLs)
+Content types: projects (slug, title, services, description, gallery, video, websiteLink, nextProject)
+Animation Libraries
+GSAP (GreenSock Animation Platform) — primary animation engine
+GSAP ScrollTrigger — scroll-driven animations
+Framer Motion or custom GSAP — page transition curtain
+Lenis or Locomotive Scroll — smooth inertial scrolling
+Possible: Three.js for 3D render elements in hero
+Styling
+Tailwind CSS or custom CSS Modules — utility-first approach
+Theme color: #27b7a5 (teal) — set in meta theme-color
+Dark background throughout — near-black (#0d0d0d to #111111)
+White/off-white text (#EEEEEE or #FFFFFF)
+Media
+Next.js <Image> component for all images — quality=75, width=3840
+Custom HTML5 <video> with controls — used in Studio reel and project video sections
+Video thumbnails with overlay play button
+Deployment
+Vercel (implied by Next.js and performance level)
+Domain: sohub.digital
+OG images: /og-images/home.png, studio.png, work.png, contact.png
+
+2. GLOBAL DESIGN SYSTEM
+____________________________________________________________
+Color Palette
+▶ ANIMATION: Color Tokens
+
+Typography
+HEADINGS
+Font: likely 'Neue Haas Grotesk', 'Helvetica Neue', or 'Inter' — ultra-clean grotesque
+Hero H1: ~96–120px, font-weight 400 or 500, line-height 0.95, letter-spacing -0.03em
+Section H2: ~48–64px, font-weight 400, tight tracking
+Sub-heading H3: ~28–36px
+All uppercase navigation items
+BODY
+Body text: ~16–18px, font-weight 300–400, color #888888 or #EEEEEE depending on context
+Line height: 1.5–1.7 for body copy
+SPECIAL
+Animated character-split headings — each letter/word wrapped in a span and revealed individually
+'Your story builds our history.' — 2-line hero text, word-by-word slide-up reveal
+Spacing System
+Generous whitespace — sections have 120–200px vertical padding
+Max content width: ~1400px, centered
+Side padding: 40–80px on desktop, 24px on mobile
+Grid: mostly CSS Grid or Flexbox, no fixed column framework
+Cursor
+Custom cursor: small ~8px solid teal dot replaces default OS cursor
+Follower ring: larger ~40px circle follows with 0.08–0.15 lerp (lag)
+On hoverable elements: dot disappears, ring expands to ~80px, possibly shows label text
+On links/project cards: cursor transforms to show text like 'View' inside the ring
+On video elements: cursor shows 'Play' text inside ring
+Implemented via mousemove event + requestAnimationFrame + CSS transform translate3d
+
+3. GLOBAL COMPONENTS
+____________________________________________________________
+3.1 — Navigation Bar
+Structure
+Position: fixed top-0, full width, z-index 1000
+Layout: logo left (sohub.digital/) → hamburger or text links right
+Links: Home | Studio | Work | Contact
+Mobile: hamburger icon toggles full-screen overlay menu
+Desktop: inline horizontal links, uppercase, small font-size ~13–14px, letter-spacing wide
+Behavior & Animation
+▶ ANIMATION: Navbar Scroll Behavior
+
+▶ ANIMATION: Mobile Menu Animation
+
+3.2 — Footer
+Structure
+Background: same as page (#0d0d0d)
+Full-width 3D render element: footerElemCorrect.png — decorative 3D abstract shape or orb
+Bottom row: © SOHub Digital · Award-Winning Digital Agency
+Social links: LinkedIn · Instagram · Twitter (icons or text)
+Footer nav: STUDIO · WORK · CONTACT
+CTA: CHAT WITH SOHUB → /contact
+Animation
+▶ ANIMATION: Footer Reveal
+
+3.3 — Page Transition System
+▶ ANIMATION: Page Transition (Route Change)
+
+3.4 — Smooth Scroll
+▶ ANIMATION: Smooth Scroll (Lenis / Locomotive)
+
+
+4. HOME PAGE  ( / )
+____________________________________________________________
+Section 1 — Hero
+Visual Layout
+Full viewport height (100vh)
+Background: dark #0d0d0d
+3D render image: homeRender.png — centered or right-aligned, large (~60–80vw), partially clipped
+The render appears to be a 3D abstract/architectural object — dark, metallic, cinematic
+Text overlay on left side or centered bottom:
+Line 1: 'Your story builds'
+Line 2: 'our history.'
+Below text: 'Scroll' indicator with animated arrow or dot
+Navbar sits over hero as fixed element
+Hero Animations
+▶ ANIMATION: Hero Load Sequence
+
+▶ ANIMATION: Hero Parallax (on scroll)
+
+Section 2 — Work (Homepage Preview)
+Visual Layout
+Section header: 'Work' (H2 size)
+Sub-copy: 'We are a diligent team, that\'s passionate about turning ideas into digital realities.'
+Project list: vertical stack of 6 project rows
+Each row: project name left, thin line separator between rows
+No thumbnails on homepage work list — text-only list (hover reveals image)
+Projects: 1UP Nova · Razer · Themis · AEVA Team · CHR Innovations · Profit Saloon
+Work List Animations
+▶ ANIMATION: Work List — Scroll Reveal
+
+▶ ANIMATION: Work List — Hover Interaction
+
+Section 3 — Services
+Visual Layout
+Section header: 'Services'
+Sub-copy: 'We are an unusual digital agency focusing on transforming your vision into a captivating digital experience.'
+4 service accordion/block items:
+Brand Identities — Logo, Typography, Color Palette, Voice & Tone, Guidelines
+Smart Development — Web Development, App Development, UI/UX Design, Interactions, CMS
+Marketing Campaigns — Digital Marketing, SEO, Social Media, Content Creation, Email Marketing
+3D Visualization — Architecture, Engineering, Construction, Interior Design, Product Design
+Each service block has: large title (with line break: 'Brand  Identities') + list of items + description paragraph
+The double space in titles ('Brand  Identities') suggests a deliberate stylistic gap or a second word on new line
+Services Animations
+▶ ANIMATION: Services — Accordion / Expand on Hover or Click
+
+Section 4 — Don't Be Shy (CTA)
+Visual Layout
+Image: careerChair.png — a 3D render of a modern chair, likely centered or full-bleed
+Large oversized heading: 'Don\'t be shy' — very large display text (~120–160px)
+CTA button: 'Chat with SOHub' → /contact
+Secondary CTA: 'BOOK A MEETING' — external calendar link
+Dark section with the chair render as hero element
+CTA Section Animations
+▶ ANIMATION: Don't Be Shy — Scroll Animation
+
+
+5. STUDIO PAGE  ( /studio )
+____________________________________________________________
+Section 1 — Hero
+Image: studioHammer.png — 3D render of a hammer (craftsmanship metaphor)
+Hero text: 'We thrive off of your satisfaction.' (2 lines, word-break on 'your')
+'Scroll' indicator below text
+Same hero animation pattern as homepage (word-by-word slide-up reveal)
+Page title: 'SOHub Studio'
+Section 2 — Team / Reel
+Visual Layout
+Section header: 'Team'
+Sub-copy: 'We are a dynamic team, passionate about turning ideas into digital realities.'
+'Play Reel' button — triggers video playback
+Video thumbnail: studioTempThumb.png — static image shown before play
+Video player: HTML5 video, shows '0:00 / 0:00' duration display
+The reel is an agency showreel video — likely 60–90 seconds of motion/project highlights
+Team Reel Animations
+▶ ANIMATION: Video Reel Interaction
+
+Section 3 — Services (Studio Page)
+Visual Layout
+Section header: 'Services'
+Sub-copy: 'Websites, branding, marketing, apps, animations & metaverse.'
+CTA: 'CONTACT US' button
+Rotating/marquee tag cloud or list: Apps · Metaverse · Branding · Animations · Websites · Marketing
+Second 'CONTACT US' button below the tag list
+Services Tag Animation
+▶ ANIMATION: Service Tags — Marquee / Carousel
+
+Section 4 — Recognition
+Visual Layout
+Section header: 'Recognition'
+Sub-copy: 'From A to Z, our agency aims to triumph over every digital award category.'
+4 award entries listed:
+Adobe Behance — Web User Interface
+Adobe Behance — Graphic Design
+Adobe Behance — 3D Animation
+FaZe Clan — Metaverse Architecture
+Each entry: award issuer (bold/large) + category (muted/small) — separated by thin line
+Recognition Animations
+▶ ANIMATION: Recognition List — Scroll Stagger
+
+Section 5 — Careers
+Visual Layout
+Section header: 'Careers'
+Sub-copy: 'Sometimes, all you need is the right group of experts to encourage you to shine along their side.'
+2 job listings:
+Front-End Developer → /careers/front-end-developer (Apply link)
+Brand Designer → /careers/brand-designer (Apply link)
+Each listing: job title left + 'Apply' CTA right, with thin line separator
+Careers Animations
+▶ ANIMATION: Career Listing — Hover
+
+
+6. WORK PAGE  ( /work )
+____________________________________________________________
+Section 1 — Hero
+Image: workTurbines.png — 3D render of wind turbines or industrial turbines
+Hero text: 'It really speaks for itself.' (2 lines)
+Page title: 'SOHub Work'
+Same hero animation as other pages
+Section 2 — Projects
+Visual Layout
+Section header: 'Projects'
+Sub-copy: 'Each project we\'ve touched holds sentimental importance and showcases our passion for art.'
+View toggle: Grid View ← → List View (two buttons, switching display mode)
+Default: Grid View
+6 projects: 1UP Nova · Razer · Themis · AEVA Team · CHR Innovations · Profit Saloon
+Grid View Layout
+2-column CSS grid on desktop, 1-column on mobile
+Each card: full project image (16:9 ratio), project name overlay or below
+Cards have subtle rounded corners (2–4px border-radius)
+Image fills card with object-fit: cover
+List View Layout
+Full-width rows, similar to homepage work list
+Project name + number (#01–#06) on left, thin separator lines between rows
+On hover: full-width image slides in from right, or fades in behind text
+Work Page Animations
+▶ ANIMATION: Grid/List Toggle
+
+▶ ANIMATION: Grid Cards — Hover
+
+▶ ANIMATION: Grid Cards — Scroll Reveal
+
+
+7. CONTACT PAGE  ( /contact )
+____________________________________________________________
+Section 1 — Hero
+Image: contactRender.png — 3D render (unknown subject, likely abstract or hands/object)
+Hero text (very long): 'Start a conversation about new business or media inquiries.'
+Text is split across 3 visual lines:
+'Start a conversation'
+'about new business'
+'or media inquiries.'
+Same word-by-word reveal animation
+Page title: 'Start a conversation about new business or media inquiries.' (used as H1/page title)
+Section 2 — Contact Form
+Visual Layout
+Section header: 'Contact'
+Sub-copy: 'Have an inquiry, suggestion, a collaboration offer or even trouble sleeping? Get in touch with us now.'
+Dynamic greeting: 'Hey there! How can we assist you on this afternoon in your area, your region?'
+  — Note: 'afternoon' is time-based (changes to morning/evening based on user's local time)
+  — 'your region' is geo-based (shows user's actual region/city via IP geolocation or browser API)
+3 inquiry type selectors (radio-style or tab-style):
+Start a project
+Join SOHub
+Say hi
+Form Fields (inferred from agency standard)
+After selecting inquiry type, form fields appear:
+Name field
+Email field
+Budget / Project type (for 'Start a project')
+Message / Tell us about yourself (for 'Join SOHub')
+Message field
+Submit button: 'Send Message' or arrow CTA
+Contact Form Animations
+▶ ANIMATION: Inquiry Type Selection
+
+▶ ANIMATION: Form Field Interactions
+
+▶ ANIMATION: Dynamic Greeting Logic
+
+
+8. PROJECT PAGE TEMPLATE  ( /work/[slug] )
+____________________________________________________________
+Overview
+All 6 project pages follow the same component template, populated from Sanity CMS.
+URL pattern: /work/1up-nova, /work/razer, /work/themis, /work/aeva-team, /work/chr-innovations, /work/profit-saloon
+Section 1 — Project Hero
+Visual Layout
+Page H1: Project name (e.g., '1UP Nova', 'Razer')
+Services used: displayed as animated stagger list
+  'We worked on the' → [Category Name] in large text
+  Sub-items listed below (Logo, Typography, Color, etc.)
+If 2 service categories: both shown side by side or stacked
+Hero image: full-width, large format (16:9 or wider), Sanity CDN image
+Services Header Animation
+▶ ANIMATION: Project Services Reveal
+
+Section 2 — Project Description
+H2: Project name again as section header
+2 paragraphs of project description text
+Image gallery: horizontal scroll strip OR masonry grid
+  Gallery images: 4 landscape (2560×1440) + 2 portrait (1584×1970)
+  The mix of orientations creates a visual collage layout
+'View website' link — opens project's live URL in new tab
+  Hover: underline draw animation or arrow extends
+Gallery Animation
+▶ ANIMATION: Image Gallery — Horizontal Scroll or Masonry Reveal
+
+Section 3 — Video
+H2: 'Video'
+Sub-copy describing the video content
+Custom HTML5 video player (same as studio reel)
+Thumbnail displayed until play clicked
+'0:00 / 0:00' custom time display
+Same play interaction as Studio reel (see Section 5.2)
+Section 4 — The Website (Web Development Projects)
+H2: 'The website'
+Description paragraph about the website built
+Large website screenshot gallery: 3 images in responsive grid
+  Each image: 4096×3072 (very high resolution screenshots)
+  Displayed as: 1 full-width + 2 below, or 3 in a row
+Section 5 — Next Project
+Visual Layout
+Label: 'Next Project'
+Project name: large text
+'View' link/button
+Progress indicator: '0%' — animated progress counter on hover/scroll
+Project preview image: appears below, full-width
+Navigation between all 6 projects in sequence
+Next Project Animation
+▶ ANIMATION: Next Project — Hover Preview
+
+
+9. CAREERS SUB-PAGES  ( /careers/[role] )
+____________________________________________________________
+Available Roles
+/careers/front-end-developer
+/careers/brand-designer
+Expected Page Structure
+These pages are linked from Studio page Careers section
+Likely structure:
+Hero: role title, hero text
+Job description: responsibilities, requirements, nice-to-haves
+Application form or redirect to email/external form
+Company culture section (optional)
+Animation: same page template as other pages
+Could be static content (no CMS needed) or Sanity-powered
+
+10. ANIMATION MASTER REFERENCE
+____________________________________________________________
+GSAP Setup
+▶ ANIMATION: GSAP Initialization
+
+Text Reveal (Word Split)
+▶ ANIMATION: Standard Text Reveal Function
+
+Line Draw Animation
+▶ ANIMATION: Divider Line Draw
+
+Image Clip Reveal
+▶ ANIMATION: Image Clip Reveal from Bottom
+
+Custom Cursor
+▶ ANIMATION: Custom Cursor Implementation
+
+Page Transition Curtain
+▶ ANIMATION: Route Change Transition (Next.js)
+
+
+11. ASSET URLS REFERENCE
+____________________________________________________________
+Static Images (Next.js public/static)
+All static images at: https://sohub.digital/_next/image?url=[path]&w=3840&q=75
+HOME PAGE
+homeRender.png → /static/images/homeRender.png
+careerChair.png → /static/images/careerChair.png
+STUDIO PAGE
+studioHammer.png → /static/images/studioHammer.png
+studioTempThumb.png → /static/images/studioTempThumb.png (reel thumbnail)
+WORK PAGE
+workTurbines.png → /static/images/workTurbines.png
+CONTACT PAGE
+contactRender.png → /static/images/contactRender.png
+GLOBAL
+footerElemCorrect.png → /static/images/footerElemCorrect.png (footer 3D element)
+OG Images
+https://sohub.digital/og-images/home.png
+https://sohub.digital/og-images/studio.png
+https://sohub.digital/og-images/work.png
+https://sohub.digital/og-images/contact.png
+Sanity CDN Project Images
+1UP NOVA
+Hero: cdn.sanity.io/images/9xh2olrq/production/13b7647fd8f50b6595e6ff5e1bbac992c327ab94-2560x1440.png
+Gallery 1: ...47bcdab8c1e1aa2df5e7b560483155a7ffe911e8-1920x1080.png
+Gallery 2: ...8848be1ccfaf7e6988a9e863620f27b7b59d575b-1921x1080.png
+Portrait 1: ...85b98e855131d002e3d9f5fd87773ed8e899edc1-1584x1970.png
+Portrait 2: ...fbaf2a596f5c00c009b26aa795fe60d4e9ddef3b-1584x1970.png
+RAZER
+Hero: cdn.sanity.io/images/9xh2olrq/production/35f0d7bd1a3347953378c6a67eeee47c7926bfa2-2716x1527.png
+Gallery 1: ...7b4266bbfdfe1c484d20164461304493731bb8ec-2560x1440.png
+THEMIS
+Preview: cdn.sanity.io/images/9xh2olrq/production/74ef631a9f98fabc4e3a156333a4f64ae0066c1a-1920x1080.png
+Careers Pages
+URL: https://sohub.digital/careers/front-end-developer
+URL: https://sohub.digital/careers/brand-designer
+External Links
+1UP Nova live site: https://1upnova.com
+Razer project: https://razer.aevateam.com
+LinkedIn: https://www.linkedin.com/company/sohubdigital/
+Instagram: https://www.instagram.com/sohubdigital/
+Twitter: https://twitter.com/sohubdigital
+____________________________________________________________
+— END OF DOCUMENT —
+SOHub Digital · Complete Blueprint · Built for AI-Assisted Replica

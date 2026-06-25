@@ -5,35 +5,31 @@ import gsap from 'gsap';
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLSpanElement>(null);
   const mousePos = useRef({ x: 0, y: 0 });
-  const ringPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     // Hide on touch devices
     if ('ontouchstart' in window) return;
 
     const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    if (!dot) return;
 
     let lastSpawnTime = 0;
 
     const spawnParticles = (x: number, y: number) => {
       // Throttle spawning slightly to keep performance high
       const now = Date.now();
-      if (now - lastSpawnTime < 20) return;
+      if (now - lastSpawnTime < 10) return; // Super fast trigger (10ms)
       lastSpawnTime = now;
 
-      const particleCount = 2; // Spawn a couple particles per movement frame
+      const particleCount = 5; // Spawn 5 particles per tick = MASSIVE INTENSITY
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
-        particle.className = 'cursor-magic-particle'; // For easy cleanup if needed
+        particle.className = 'cursor-magic-particle';
         document.body.appendChild(particle);
 
-        // Ultra fine particles (1px - 3px)
-        const size = Math.random() * 2 + 1; 
+        // Ultra fine particles (1px - 4px)
+        const size = Math.random() * 3 + 1; 
         
         gsap.set(particle, {
           x: x,
@@ -49,13 +45,13 @@ export default function CustomCursor() {
           zIndex: 9999,
         });
 
-        // Dissolve like a magic stick trail
+        // Dissolve like a magic stick trail with wider spread
         gsap.to(particle, {
-          x: x + (Math.random() - 0.5) * 40, // spread out slightly
-          y: y + (Math.random() - 0.5) * 40 + 10, // slightly fall down
+          x: x + (Math.random() - 0.5) * 80, // wider spread
+          y: y + (Math.random() - 0.5) * 80 + 10, // slight fall
           opacity: 0,
           scale: 0,
-          duration: Math.random() * 0.6 + 0.4, // dissolve within 0.4s - 1s
+          duration: Math.random() * 0.8 + 0.6, // lasts slightly longer
           ease: 'power2.out',
           onComplete: () => {
             if (particle.parentNode) {
@@ -72,45 +68,20 @@ export default function CustomCursor() {
       // Dot follows instantly
       gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0 });
       
-      // Spawn trail particles
+      // Spawn intense trail particles
       spawnParticles(e.clientX, e.clientY);
     };
 
-    // Ring follows with lerp via GSAP ticker
-    const tickerCallback = () => {
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.1;
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.1;
-      gsap.set(ring, {
-        x: ringPos.current.x,
-        y: ringPos.current.y,
-      });
-    };
-
-    // Hover states
-    const handleEnter = (e: Event) => {
-      const target = e.currentTarget as HTMLElement;
-      const cursorLabel = target.dataset.cursorLabel || '';
-
-      gsap.to(ring, { width: 80, height: 80, duration: 0.3 });
-      gsap.to(dot, { opacity: 0, scale: 0, duration: 0.3 });
-
-      if (cursorLabel && labelRef.current) {
-        labelRef.current.textContent = cursorLabel;
-        gsap.to(labelRef.current, { opacity: 1, duration: 0.3 });
-      }
+    // Hover states (Scale the dot down and make it transparent)
+    const handleEnter = () => {
+      gsap.to(dot, { scale: 0, opacity: 0, duration: 0.3 });
     };
 
     const handleLeave = () => {
-      gsap.to(ring, { width: 40, height: 40, duration: 0.3 });
-      gsap.to(dot, { opacity: 1, scale: 1, duration: 0.3 });
-
-      if (labelRef.current) {
-        gsap.to(labelRef.current, { opacity: 0, duration: 0.3 });
-      }
+      gsap.to(dot, { scale: 1, opacity: 1, duration: 0.3 });
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    gsap.ticker.add(tickerCallback);
 
     // Add hover listeners to all interactive elements
     const addHoverListeners = () => {
@@ -137,7 +108,6 @@ export default function CustomCursor() {
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
-      gsap.ticker.remove(tickerCallback);
       observer.disconnect();
       hoverables.forEach((el) => {
         el.removeEventListener('mouseenter', handleEnter);
@@ -147,11 +117,6 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <>
-      <div ref={dotRef} className="custom-cursor" />
-      <div ref={ringRef} className="cursor-follower">
-        <span ref={labelRef} className="cursor-follower-label" />
-      </div>
-    </>
+    <div ref={dotRef} className="custom-cursor" />
   );
 }

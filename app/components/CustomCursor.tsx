@@ -38,6 +38,8 @@ export default function CustomCursor() {
         gsap.set(particle, {
           x: x,
           y: y,
+          top: 0,
+          left: 0,
           width: size,
           height: size,
           backgroundColor: 'var(--accent)', // Electric cobalt

@@ -281,35 +281,69 @@ function ProjectDescription({ project }: { project: typeof PROJECTS[string] }) {
 
 /* ── PROJECT GALLERY ── */
 function ProjectGallery({ gallery }: { gallery: string[] }) {
-  const galleryRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (gallery.length <= 1) return;
+
     const ctx = gsap.context(() => {
-      gsap.from('.gallery-img', {
-        clipPath: 'inset(0 0 0 100%)',
-        duration: 1.2,
-        stagger: 0.2,
-        ease: 'power4.inOut',
-        scrollTrigger: { trigger: galleryRef.current, start: 'top 80%' },
+      if (!wrapperRef.current || !containerRef.current) return;
+      
+      gsap.to(wrapperRef.current, {
+        x: () => -(wrapperRef.current!.scrollWidth - window.innerWidth),
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          end: () => "+=" + wrapperRef.current!.scrollWidth,
+        }
       });
-    }, galleryRef);
+    }, containerRef);
+    
     return () => ctx.revert();
-  }, []);
+  }, [gallery.length]);
 
   return (
-    <section className="section" style={{ background: 'var(--bg-primary)' }}>
-      <div className="container">
-        <div ref={galleryRef} style={{
-          display: 'grid',
-          gridTemplateColumns: gallery.length > 1 ? 'repeat(2, 1fr)' : '1fr',
-          gap: '24px',
-        }}>
-          {gallery.map((img, i) => (
-            <div key={i} className="gallery-img" style={{ borderRadius: '4px', overflow: 'hidden' }}>
-              <Image src={img} alt="" width={0} height={0} sizes="(max-width: 768px) 100vw, 50vw" style={{ width: '100%', height: 'auto', display: 'block' }} />
+    <section 
+      ref={containerRef} 
+      style={{ 
+        background: 'var(--bg-primary)', 
+        overflow: 'hidden', 
+        height: '100vh', 
+        display: 'flex', 
+        alignItems: 'center' 
+      }}
+    >
+      <div 
+        ref={wrapperRef} 
+        style={{ 
+          display: 'flex', 
+          width: `${gallery.length * 100}vw`, 
+          height: '100%' 
+        }}
+      >
+        {gallery.map((img, i) => (
+          <div 
+            key={i} 
+            className="gallery-slide" 
+            style={{ 
+              width: '100vw', 
+              height: '100%', 
+              flexShrink: 0, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              padding: '40px' 
+            }}
+          >
+            <div style={{ position: 'relative', width: '100%', maxWidth: '1200px', height: '80vh', borderRadius: '8px', overflow: 'hidden' }}>
+              <Image src={img} alt="" fill sizes="100vw" style={{ objectFit: 'contain' }} />
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );

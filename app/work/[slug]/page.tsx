@@ -321,7 +321,9 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
         ref={wrapperRef} 
         style={{ 
           display: 'flex', 
-          width: `${gallery.length * 100}vw`, 
+          gap: '24px',
+          padding: '0 24px',
+          width: 'max-content',
           height: '100%' 
         }}
       >
@@ -330,17 +332,15 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
             key={i} 
             className="gallery-slide" 
             style={{ 
-              width: '100vw', 
               height: '100%', 
               flexShrink: 0, 
               display: 'flex', 
               alignItems: 'center', 
-              justifyContent: 'center', 
-              padding: '40px' 
+              justifyContent: 'center',
             }}
           >
-            <div style={{ position: 'relative', width: '100%', maxWidth: '1200px', height: '80vh', borderRadius: '8px', overflow: 'hidden' }}>
-              <Image src={img} alt="" fill sizes="100vw" style={{ objectFit: 'contain' }} />
+            <div style={{ position: 'relative', width: 'clamp(300px, 70vw, 1000px)', height: '70vh', borderRadius: '8px', overflow: 'hidden' }}>
+              <Image src={img} alt="" fill sizes="100vw" style={{ objectFit: 'cover' }} />
             </div>
           </div>
         ))}

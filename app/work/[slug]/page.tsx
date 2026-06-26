@@ -283,6 +283,7 @@ function ProjectDescription({ project }: { project: typeof PROJECTS[string] }) {
 function ProjectGallery({ gallery }: { gallery: string[] }) {
   const containerRef = useRef<HTMLElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (gallery.length <= 1) return;
@@ -306,46 +307,90 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
     return () => ctx.revert();
   }, [gallery.length]);
 
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedImage]);
+
   return (
-    <section 
-      ref={containerRef} 
-      style={{ 
-        background: 'var(--bg-primary)', 
-        overflow: 'hidden', 
-        height: '100vh', 
-        display: 'flex', 
-        alignItems: 'center' 
-      }}
-    >
-      <div 
-        ref={wrapperRef} 
+    <>
+      <section 
+        ref={containerRef} 
         style={{ 
+          background: 'var(--bg-primary)', 
+          overflow: 'hidden', 
+          height: '100vh', 
           display: 'flex', 
-          gap: '24px',
-          padding: '0 24px',
-          width: 'max-content',
-          height: '100%' 
+          alignItems: 'center' 
         }}
       >
-        {gallery.map((img, i) => (
-          <div 
-            key={i} 
-            className="gallery-slide" 
-            style={{ 
-              height: '100%', 
-              flexShrink: 0, 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-            }}
-          >
-            <div style={{ position: 'relative', width: 'clamp(300px, 70vw, 1000px)', height: '70vh', borderRadius: '8px', overflow: 'hidden' }}>
-              <Image src={img} alt="" fill sizes="100vw" style={{ objectFit: 'cover' }} />
+        <div 
+          ref={wrapperRef} 
+          style={{ 
+            display: 'flex', 
+            gap: '24px',
+            padding: '0 24px',
+            width: 'max-content',
+            height: '100%' 
+          }}
+        >
+          {gallery.map((img, i) => (
+            <div 
+              key={i} 
+              className="gallery-slide" 
+              style={{ 
+                height: '100%', 
+                flexShrink: 0, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+              data-cursor-label="View"
+              onClick={() => setSelectedImage(img)}
+            >
+              <div style={{ position: 'relative', width: 'clamp(300px, 70vw, 1000px)', height: '70vh', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }} 
+                   onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                   onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+                <Image src={img} alt="" fill sizes="100vw" style={{ objectFit: 'cover' }} />
+              </div>
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Lightbox Overlay */}
+      {selectedImage && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 99999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'zoom-out',
+            padding: '40px'
+          }}
+          onClick={() => setSelectedImage(null)}
+          data-cursor-label="Close"
+        >
+          <div style={{ position: 'relative', width: '100%', height: '100%', maxWidth: '1600px' }}>
+            <Image src={selectedImage} alt="Expanded View" fill sizes="100vw" style={{ objectFit: 'contain' }} priority />
           </div>
-        ))}
-      </div>
-    </section>
+        </div>
+      )}
+    </>
   );
 }
 

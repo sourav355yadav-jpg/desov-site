@@ -1,12 +1,23 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 
 export default function CustomCursor() {
   const mousePos = useRef({ x: 0, y: 0 });
   const labelRef = useRef<HTMLDivElement>(null);
   const [label, setLabel] = useState('');
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Reset cursor state on route change
+    setLabel('');
+    if (labelRef.current) {
+      gsap.to(labelRef.current, { scale: 0, opacity: 0, duration: 0.2 });
+    }
+    document.body.style.cursor = '';
+  }, [pathname]);
 
   useEffect(() => {
     // Hide on touch devices

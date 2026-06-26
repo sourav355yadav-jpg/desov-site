@@ -166,12 +166,12 @@ export default function ProjectPage() {
   }
 
   return (
-    <>
+    <main key={slug}>
       <ProjectHero project={project} />
       <ProjectDescription project={project} />
       {project.gallery.length > 0 && <ProjectGallery gallery={project.gallery} />}
       <NextProject nextSlug={project.next} />
-    </>
+    </main>
   );
 }
 
@@ -401,8 +401,15 @@ function NextProject({ nextSlug }: { nextSlug: string }) {
   const sectionRef = useRef<HTMLElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
   const handleEnter = () => {
     let val = 0;
+    if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       val += 2;
       if (val > 100) val = 100;

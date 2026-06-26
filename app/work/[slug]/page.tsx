@@ -286,7 +286,8 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.gallery-img', {
-        clipPath: 'inset(100% 0 0 0)',
+        x: 100,
+        opacity: 0,
         duration: 0.8,
         stagger: 0.15,
         ease: 'power3.out',

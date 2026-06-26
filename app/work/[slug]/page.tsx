@@ -286,11 +286,10 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.gallery-img', {
-        x: 100,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
+        clipPath: 'inset(0 0 0 100%)',
+        duration: 1.2,
+        stagger: 0.2,
+        ease: 'power4.inOut',
         scrollTrigger: { trigger: galleryRef.current, start: 'top 80%' },
       });
     }, galleryRef);

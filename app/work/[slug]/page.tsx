@@ -350,7 +350,7 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                cursor: 'pointer',
+                cursor: 'none',
               }}
               data-cursor-label="View"
               onClick={() => setSelectedImage(img)}
@@ -379,7 +379,7 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            cursor: 'zoom-out',
+            cursor: 'none',
             padding: '40px'
           }}
           onClick={() => setSelectedImage(null)}

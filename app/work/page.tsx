@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PROJECTS = [
   { name: 'Keopi', slug: 'keopi', num: '#01', image: '/projects/keopi_mockup_2_isometric_1781775402823.png' },
-  { name: 'Bombay Canteen', slug: 'bombay-canteen', num: '#02', image: '/projects/bombay_canteen_poster_one.png' },
+  { name: 'Earth Brew', slug: 'earth-brew', num: '#02', image: '/projects/earth-brew/WhatsApp Image 2026-05-01 at 12.13.03 PM.jpeg' },
   { name: 'Sleepy Owl', slug: 'sleepy-owl', num: '#03', image: '/projects/sleepy_owl_poster_one.png' },
   { name: 'Subko', slug: 'subko', num: '#04', image: '/projects/subko_poster_one.png' },
   { name: 'Sol Sage', slug: 'sol-sage', num: '#05', image: '/projects/sol_sage_poster_one.png' },

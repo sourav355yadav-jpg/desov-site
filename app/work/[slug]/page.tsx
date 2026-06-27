@@ -286,31 +286,7 @@ function ProjectDescription({ project }: { project: typeof PROJECTS[string] }) {
 
 /* ── PROJECT GALLERY ── */
 function ProjectGallery({ gallery }: { gallery: string[] }) {
-  const containerRef = useRef<HTMLElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (gallery.length <= 1) return;
-
-    const ctx = gsap.context(() => {
-      if (!wrapperRef.current || !containerRef.current) return;
-      
-      gsap.to(wrapperRef.current, {
-        x: () => -(wrapperRef.current!.scrollWidth - window.innerWidth),
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-          end: () => "+=" + wrapperRef.current!.scrollWidth,
-        }
-      });
-    }, containerRef);
-    
-    return () => ctx.revert();
-  }, [gallery.length]);
 
   useEffect(() => {
     if (selectedImage) {
@@ -325,46 +301,35 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
 
   return (
     <>
-      <section 
-        ref={containerRef} 
-        style={{ 
-          background: 'var(--bg-primary)', 
-          overflow: 'hidden', 
-          height: '100vh', 
-          display: 'flex', 
-          alignItems: 'center' 
-        }}
-      >
-        <div 
-          ref={wrapperRef} 
-          style={{ 
-            display: 'flex', 
-            gap: '24px',
-            padding: '0 24px',
-            width: 'max-content',
-            height: '100%' 
-          }}
-        >
+      <section className="section" style={{ background: 'var(--bg-primary)' }}>
+        <div className="container" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
+          gap: '24px',
+        }}>
           {gallery.map((img, i) => (
             <div 
               key={i} 
-              className="gallery-slide" 
               style={{ 
-                height: '100%', 
-                flexShrink: 0, 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                cursor: 'none',
+                position: 'relative', 
+                width: '100%', 
+                aspectRatio: '4/5', 
+                borderRadius: '8px', 
+                overflow: 'hidden',
+                cursor: 'none'
               }}
               data-cursor-label="View"
               onClick={() => setSelectedImage(img)}
             >
-              <div style={{ position: 'relative', width: 'clamp(300px, 70vw, 1000px)', height: '70vh', borderRadius: '8px', overflow: 'hidden', transition: 'transform 0.3s ease' }} 
-                   onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                   onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-                <Image src={img} alt="" fill sizes="100vw" style={{ objectFit: 'cover' }} />
-              </div>
+              <Image 
+                src={img} 
+                alt="Project Image" 
+                fill 
+                sizes="(max-width: 768px) 100vw, 50vw" 
+                style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }} 
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              />
             </div>
           ))}
         </div>

@@ -2,18 +2,18 @@
 
 /* ===== SOHub Design System Tokens ===== */
 :root {
-  /* Warm Sand & Slate Blue Palette */
-  --bg-primary: #FAF9F6; /* Ivory / Off-white */
-  --bg-secondary: #B8C5B8; /* Soft Sage */
-  --bg-card: #E3D9CD; /* Slightly lighter Warm Sand */
+  /* Pink, Cream, & White Palette */
+  --bg-primary: #ffffff; /* Pure White */
+  --bg-secondary: #FAFACA; /* Sections Color (Cream/Off-white) */
+  --bg-card: #F9F9F9; /* Slight off-white for cards */
   
-  --text-primary: #2B3238; /* Darkened Cool Grey for high readability on light background */
-  --text-secondary: #A0AAB2; /* Cool Grey */
-  --text-muted: #848D95; /* Slightly darker grey */
+  --text-primary: #1f2937; /* Headings (Dark Charcoal/Navy) */
+  --text-secondary: #111827; /* Body Text (Very Dark Blue) */
+  --text-muted: #6B7280; /* Muted text */
   
-  --accent: #5A7D9A; /* Slate Blue */
-  --accent-hover: #456178;
-  --line-color: rgba(160, 170, 178, 0.5); /* Cool Grey dividers */
+  --accent: #E8A1B5; /* Primary Buttons (Light Pink) */
+  --accent-hover: #D9779F; /* Hover (Medium Rose Pink) */
+  --line-color: #E5E7E8; /* Borders (Light Gray) */
   
   --section-padding-y: clamp(100px, 15vw, 240px);
   --section-padding-x: clamp(24px, 6vw, 100px);
@@ -221,7 +221,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar.scrolled {
-  background: rgba(250, 249, 246, 0.9); /* Matching FAF9F6 */
+  background: rgba(255, 255, 255, 0.9); /* Matching White */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }

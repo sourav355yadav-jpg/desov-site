@@ -2,18 +2,18 @@
 
 /* ===== SOHub Design System Tokens ===== */
 :root {
-  /* Olive & Cobalt Palette */
-  --bg-primary: #FBF9F6;
-  --bg-secondary: #FFFFFF;
-  --bg-card: #F2F3EE;
+  /* Warm Sand & Slate Blue Palette */
+  --bg-primary: #D9D0C5; /* Warm Sand */
+  --bg-secondary: #B8C5B8; /* Soft Sage */
+  --bg-card: #E3D9CD; /* Slightly lighter Warm Sand */
   
-  --text-primary: #1C1C1C;
-  --text-secondary: #7A8464; /* Muted Olive Green */
-  --text-muted: #9BA38A;
+  --text-primary: #2B3238; /* Darkened Cool Grey for high readability on light background */
+  --text-secondary: #A0AAB2; /* Cool Grey */
+  --text-muted: #848D95; /* Slightly darker grey */
   
-  --accent: #0055FF; /* Electric Cobalt Blue */
-  --accent-hover: #0044CC;
-  --line-color: rgba(122, 132, 100, 0.2); /* Olive Green border lines */
+  --accent: #5A7D9A; /* Slate Blue */
+  --accent-hover: #456178;
+  --line-color: rgba(160, 170, 178, 0.5); /* Cool Grey dividers */
   
   --section-padding-y: clamp(100px, 15vw, 240px);
   --section-padding-x: clamp(24px, 6vw, 100px);
@@ -221,7 +221,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar.scrolled {
-  background: rgba(251, 249, 246, 0.9); /* Matching Alabaster FBF9F6 */
+  background: rgba(217, 208, 197, 0.9); /* Matching Warm Sand D9D0C5 */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -602,7 +602,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== Footer ===== */
 .footer {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   padding: 80px var(--section-padding-x) 40px;
   position: relative;
   overflow: hidden;

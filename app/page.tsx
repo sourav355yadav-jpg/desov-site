@@ -134,16 +134,16 @@ function HeroSection() {
       }}>
         <div style={{
           width: '100%', aspectRatio: '16/10',
-          background: 'radial-gradient(ellipse at 40% 40%, rgba(221,167,165,0.15) 0%, transparent 60%), radial-gradient(ellipse at 60% 60%, rgba(221,167,165,0.08) 0%, transparent 50%)',
+          background: 'radial-gradient(ellipse at 40% 40%, rgba(184, 197, 184, 0.25) 0%, transparent 60%), radial-gradient(ellipse at 60% 60%, rgba(184, 197, 184, 0.15) 0%, transparent 50%)',
           borderRadius: '20px',
           filter: 'blur(0.5px)',
         }}>
           <div style={{
             width: '60%', height: '70%', margin: 'auto',
             position: 'relative', top: '15%',
-            background: 'linear-gradient(135deg, #F1E9DA, #DFCEC1, #DDA7A5)',
+            background: 'linear-gradient(135deg, #CFDACF, #B8C5B8, #9CAE9C)',
             borderRadius: '12px',
-            boxShadow: '0 40px 80px rgba(42,37,34,0.15), 0 0 60px rgba(221,167,165,0.1)',
+            boxShadow: '0 40px 80px rgba(42,37,34,0.15), 0 0 60px rgba(184, 197, 184, 0.2)',
             transform: 'perspective(800px) rotateY(-5deg) rotateX(3deg)',
           }} />
         </div>
@@ -352,7 +352,7 @@ function CTASection() {
       {/* Chair Render Placeholder */}
       <div className="cta-render" style={{
         width: '40vw', maxWidth: '500px', aspectRatio: '1',
-        background: 'radial-gradient(circle, rgba(221,167,165,0.12) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(184, 197, 184, 0.25) 0%, transparent 70%)',
         borderRadius: '50%',
       }} />
 

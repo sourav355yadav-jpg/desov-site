@@ -62,27 +62,45 @@ export default function Home() {
 function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const renderRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useTextReveal(titleRef, { delay: 0.3, stagger: 0.1, duration: 0.8 });
+  useTextReveal(titleRef, { delay: 1.8, stagger: 0.1, duration: 0.8 });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 3D render fade in + scale
-      gsap.from('.hero-render-wrapper', {
+      // 3D scatter setup for the DESOV letters
+      const letters = gsap.utils.toArray('.desov-letter');
+      
+      gsap.set(letters, {
+        x: () => gsap.utils.random(-600, 600),
+        y: () => gsap.utils.random(-400, 400),
+        z: () => gsap.utils.random(-1000, 800),
+        rotationX: () => gsap.utils.random(-360, 360),
+        rotationY: () => gsap.utils.random(-360, 360),
+        rotationZ: () => gsap.utils.random(-180, 180),
         opacity: 0,
-        scale: 1.05,
-        duration: 1.0,
-        ease: 'power2.out',
-        delay: 0.1,
       });
 
-      // Scroll indicator fade in
+      // Animate them snapping perfectly together
+      gsap.to(letters, {
+        x: 0,
+        y: 0,
+        z: 0,
+        rotationX: 0,
+        rotationY: 0,
+        rotationZ: 0,
+        opacity: 1,
+        duration: 2.5,
+        stagger: 0.15,
+        ease: 'power4.out',
+        delay: 0.2,
+      });
+
+      // Scroll indicator fade in later
       gsap.from('.scroll-indicator', {
         opacity: 0,
         duration: 0.5,
-        delay: 0.9,
+        delay: 2.2,
       });
 
       // Hero parallax on scroll
@@ -107,45 +125,45 @@ function HeroSection() {
           scrub: true,
         },
       });
-
-      // Fade hero as scrolling
+      
       gsap.to(heroRef.current, {
         opacity: 0,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: '50% top',
-          end: 'bottom top',
-          scrub: true,
+        scrollTrigger: { 
+          trigger: heroRef.current, 
+          start: '50% top', 
+          end: 'bottom top', 
+          scrub: true 
         },
       });
     }, heroRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
     <section ref={heroRef} className="hero">
-      {/* 3D Render */}
       <div className="hero-render-wrapper" style={{
-        position: 'absolute', top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '70vw', maxWidth: '1200px',
-        zIndex: 1, pointerEvents: 'none',
+        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        width: '100%', zIndex: 1, pointerEvents: 'none',
+        perspective: '1500px', // Adds true 3D depth to the transforms
       }}>
         <div style={{
-          width: '100%', aspectRatio: '16/10',
-          background: 'radial-gradient(ellipse at 40% 40%, rgba(17, 24, 39, 0.4) 0%, transparent 60%), radial-gradient(ellipse at 60% 60%, rgba(17, 24, 39, 0.25) 0%, transparent 50%)',
-          borderRadius: '20px',
-          filter: 'blur(0.5px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(5px, 2vw, 20px)',
+          transformStyle: 'preserve-3d',
         }}>
-          <div style={{
-            width: '60%', height: '70%', margin: 'auto',
-            position: 'relative', top: '15%',
-            background: 'linear-gradient(135deg, #1f2937, #111827, #0b0f19)',
-            borderRadius: '12px',
-            boxShadow: '0 40px 80px rgba(42,37,34,0.1), 0 0 60px rgba(17, 24, 39, 0.3)',
-            transform: 'perspective(800px) rotateY(-5deg) rotateX(3deg)',
-          }} />
+          {['D', 'E', 'S', 'O', 'V'].map((letter, i) => (
+            <span key={i} className="desov-letter" style={{
+              fontSize: 'clamp(100px, 22vw, 320px)',
+              fontFamily: 'var(--font-playfair), serif',
+              fontWeight: 500,
+              color: 'var(--bg-primary)',
+              WebkitTextStroke: '2px var(--text-secondary)',
+              textShadow: '0px 20px 40px rgba(0,0,0,0.1)',
+              display: 'inline-block',
+              transformStyle: 'preserve-3d',
+            }}>
+              {letter}
+            </span>
+          ))}
         </div>
       </div>
 

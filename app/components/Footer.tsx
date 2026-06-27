@@ -30,7 +30,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={footerRef} className="footer">
+    <footer ref={footerRef} className="footer theme-dark">
       {/* 3D Render Element */}
       <div style={{ textAlign: 'center', marginBottom: '60px' }}>
         <div

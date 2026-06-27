@@ -259,7 +259,7 @@ function ServicesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section" style={{ background: 'var(--bg-secondary)' }}>
+    <section ref={sectionRef} className="section theme-dark" style={{ background: 'var(--bg-secondary)' }}>
       <div className="container">
         <h2 ref={titleRef} className="section-title">Services</h2>
         <p ref={subtitleRef} className="section-subtitle" style={{ marginBottom: '60px' }}>

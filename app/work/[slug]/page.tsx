@@ -253,7 +253,7 @@ function ProjectDescription({ project }: { project: typeof PROJECTS[string] }) {
   useScrollReveal(textRef, { y: 20 });
 
   return (
-    <section className="section" style={{ background: 'var(--bg-secondary)' }}>
+    <section className="section theme-dark" style={{ background: 'var(--bg-secondary)' }}>
       <div className="container">
         <h2 ref={titleRef} className="section-title">{project.name}</h2>
         <div ref={textRef} style={{ maxWidth: '700px' }}>

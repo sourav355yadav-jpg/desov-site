@@ -155,9 +155,8 @@ function HeroSection() {
               fontSize: 'clamp(100px, 22vw, 320px)',
               fontFamily: 'var(--font-playfair), serif',
               fontWeight: 500,
-              color: 'var(--bg-primary)',
-              WebkitTextStroke: '2px var(--text-secondary)',
-              textShadow: '0px 20px 40px rgba(0,0,0,0.1)',
+              color: 'var(--text-secondary)',
+              textShadow: '1px 1px 0 var(--accent), 2px 2px 0 var(--accent), 3px 3px 0 var(--accent), 4px 4px 0 var(--accent), 5px 5px 0 var(--accent), 0px 20px 40px rgba(0,0,0,0.15)',
               display: 'inline-block',
               transformStyle: 'preserve-3d',
             }}>

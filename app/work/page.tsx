@@ -95,16 +95,7 @@ function ProjectsSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (view === 'grid') {
-        gsap.from('.project-card', {
-          opacity: 0,
-          x: (i: number) => (i % 2 === 0 ? -30 : 30),
-          duration: 0.7,
-          stagger: 0.15,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: '.project-grid', start: 'top 85%' },
-        });
-      }
+      // Removed scrolling/sliding animation for grid view based on user request
     }, sectionRef);
     return () => ctx.revert();
   }, [view]);

@@ -4,7 +4,8 @@
 :root {
   /* Pink, Cream, & White Palette */
   --bg-primary: #ffffff; /* Pure White */
-  --bg-secondary: #FAFACA; /* Sections Color (Cream/Off-white) */
+  --bg-secondary: #111827; /* Sections/Footer (Very Dark Blue) */
+  --text-on-secondary: #ffffff; /* White text for dark backgrounds */
   --bg-card: #F9F9F9; /* Slight off-white for cards */
   
   --text-primary: #1f2937; /* Headings (Dark Charcoal/Navy) */
@@ -603,6 +604,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== Footer ===== */
 .footer {
   background: var(--bg-secondary);
+  color: var(--text-on-secondary);
   padding: 80px var(--section-padding-x) 40px;
   position: relative;
   overflow: hidden;
@@ -630,7 +632,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-copy {
   font-size: 14px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .footer-links {
@@ -644,7 +646,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
   transition: color 0.3s ease;
 }
 
@@ -659,7 +661,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-socials a {
   font-size: 14px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
   transition: color 0.3s ease;
 }
 

@@ -52,41 +52,49 @@ const fragmentShaderSource = `
     vec2 mouse = u_mouse.xy / u_resolution.xy;
     mouse.x *= u_resolution.x / u_resolution.y;
 
-    // Mouse interaction (warp space)
-    float dist = distance(st, mouse);
-    float mouseEffect = smoothstep(0.6, 0.0, dist);
-    
-    // Displace coordinates based on mouse
-    vec2 displacedSt = st + (st - mouse) * mouseEffect * 0.4;
-    
-    // Slow moving time
+    // Fluid time
     float t = u_time * 0.15;
     
-    // Multiscale noise
-    float n1 = snoise(displacedSt * 2.0 + t);
-    float n2 = snoise(displacedSt * 4.0 - t * 0.8);
-    float n = (n1 + n2 * 0.5) * 0.5 + 0.5;
+    // Warp the coordinates using noise and mouse position
+    // Calculate distance to mouse for interaction
+    float dist = distance(st, mouse);
+    float mouseRepel = exp(-dist * 4.0); // Smooth falloff from mouse
+
+    // The warp changes heavily near the mouse
+    vec2 warp = st + vec2(
+        snoise(st * 1.5 + t),
+        snoise(st * 1.5 - t + 10.0)
+    ) * 0.3;
     
-    // Define colors:
-    // Color 1: #ffffff (White base)
-    vec3 color1 = vec3(1.0, 1.0, 1.0);
-    // Color 2: #FBF9F6 (Cream)
-    vec3 color2 = vec3(251.0/255.0, 249.0/255.0, 246.0/255.0);
-    // Color 3: #E8A1B5 (Accent Pink)
-    vec3 color3 = vec3(232.0/255.0, 161.0/255.0, 181.0/255.0);
+    // Push the warp away from the cursor
+    warp += (st - mouse) * mouseRepel * 0.5;
+
+    // Generate fluid noise patterns based on warped coordinates
+    float n1 = snoise(warp * 1.2 + t * 1.2);
+    float n2 = snoise(warp * 2.5 - t * 0.8);
+    float n3 = snoise(warp * 4.0 + t * 0.5);
+    
+    // Combine noise into a smooth swirling value [0, 1]
+    float n = (n1 + n2 * 0.5 + n3 * 0.25) / 1.75;
+    n = n * 0.5 + 0.5; 
+
+    // Vibrant colors for the mesh
+    // Color 1: #FBF9F6 (Cream/White)
+    vec3 color1 = vec3(251.0/255.0, 249.0/255.0, 246.0/255.0);
+    // Color 2: #E8A1B5 (Vibrant Pink)
+    vec3 color2 = vec3(232.0/255.0, 161.0/255.0, 181.0/255.0);
+    // Color 3: #a3bcf9 (Soft Blue for contrast/mesh depth)
+    vec3 color3 = vec3(163.0/255.0, 188.0/255.0, 249.0/255.0);
     // Color 4: #111827 (Dark Navy)
     vec3 color4 = vec3(17.0/255.0, 24.0/255.0, 39.0/255.0);
 
-    // Mix colors based on noise
-    vec3 finalColor = mix(color1, color2, smoothstep(0.1, 0.4, n));
-    finalColor = mix(finalColor, color3, smoothstep(0.4, 0.8, n) * 0.3); // Soft pink clouds
+    // Create bold swirling transitions
+    vec3 finalColor = mix(color1, color2, smoothstep(0.1, 0.6, n));
+    finalColor = mix(finalColor, color3, smoothstep(0.5, 0.9, n));
+    finalColor = mix(finalColor, color4, smoothstep(0.85, 1.0, n) * 0.15); // Subtle dark streaks
     
-    // Add some depth with the dark navy slightly creeping in
-    float darkMask = snoise(displacedSt * 1.2 - t * 0.5) * 0.5 + 0.5;
-    finalColor = mix(finalColor, color4, smoothstep(0.7, 1.0, darkMask) * 0.08); // Very subtle dark areas
-    
-    // Extra pink glow near mouse
-    finalColor = mix(finalColor, color3, mouseEffect * 0.5);
+    // Enhance the area around the cursor to look like it's dragging the liquid
+    finalColor = mix(finalColor, color2, mouseRepel * 0.4);
 
     gl_FragColor = vec4(finalColor, 1.0);
   }

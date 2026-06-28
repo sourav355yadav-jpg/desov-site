@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
    PROJECT DATA
    ============================================================ */
 const PROJECTS = [
-  { name: 'Keopi', slug: 'keopi', image: '/projects/keopi_mockup_2_isometric_1781775402823.png', category: 'Brand Identity' },
+  { name: 'Keopi', slug: 'keopi', image: '/projects/keopi/keopi_mockup_2_isometric_1781775402823.png', category: 'Brand Identity' },
   { name: 'Earth Brew', slug: 'earth-brew', image: '/projects/earth-brew/WhatsApp Image 2026-05-01 at 12.13.03 PM.jpeg', category: 'Packaging Design' },
   { name: 'Sleepy Owl', slug: 'sleepy-owl', image: '/projects/sleepy_owl_poster_one.png', category: 'Brand Identity' },
   { name: 'Subko', slug: 'subko', image: '/projects/subko_poster_one.png', category: 'Smart Development' },

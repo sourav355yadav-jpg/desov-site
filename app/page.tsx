@@ -68,13 +68,33 @@ function HeroSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 3D scatter setup for the DESOV letters
+      // Background Orbs Animation
+      gsap.to('.hero-orb-1', {
+        rotation: 360,
+        x: 100,
+        y: 50,
+        duration: 20,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+      gsap.to('.hero-orb-2', {
+        rotation: -360,
+        x: -100,
+        y: -50,
+        duration: 25,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+
+      // 3D scatter setup for the DESOV glass blocks
       const letters = gsap.utils.toArray('.desov-letter');
       
       gsap.set(letters, {
-        x: () => gsap.utils.random(-600, 600),
-        y: () => gsap.utils.random(-400, 400),
-        z: () => gsap.utils.random(-1000, 800),
+        x: () => gsap.utils.random(-800, 800),
+        y: () => gsap.utils.random(-600, 600),
+        z: () => gsap.utils.random(-1200, 1000),
         rotationX: () => gsap.utils.random(-360, 360),
         rotationY: () => gsap.utils.random(-360, 360),
         rotationZ: () => gsap.utils.random(-180, 180),
@@ -90,8 +110,8 @@ function HeroSection() {
         rotationY: 0,
         rotationZ: 0,
         opacity: 1,
-        duration: 2.5,
-        stagger: 0.15,
+        duration: 2.8,
+        stagger: 0.12,
         ease: 'power4.out',
         delay: 0.2,
       });
@@ -143,25 +163,51 @@ function HeroSection() {
     <section ref={heroRef} className="hero">
       <div className="hero-render-wrapper" style={{
         position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-        width: '100%', zIndex: 1, pointerEvents: 'none',
-        perspective: '1500px', // Adds true 3D depth to the transforms
+        width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none',
+        perspective: '2000px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
+        {/* Abstract Background Orbs for Glass Refraction */}
+        <div className="hero-orb-1" style={{
+          position: 'absolute', top: '20%', left: '30%',
+          width: '40vw', height: '40vw',
+          background: 'radial-gradient(circle, var(--accent) 0%, transparent 60%)',
+          filter: 'blur(60px)', opacity: 0.4, zIndex: 0,
+        }} />
+        <div className="hero-orb-2" style={{
+          position: 'absolute', bottom: '10%', right: '25%',
+          width: '50vw', height: '50vw',
+          background: 'radial-gradient(circle, var(--text-secondary) 0%, transparent 60%)',
+          filter: 'blur(80px)', opacity: 0.15, zIndex: 0,
+        }} />
+
         <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(5px, 2vw, 20px)',
-          transformStyle: 'preserve-3d',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(10px, 2vw, 30px)',
+          transformStyle: 'preserve-3d', zIndex: 1,
         }}>
           {['D', 'E', 'S', 'O', 'V'].map((letter, i) => (
-            <span key={i} className="desov-letter" style={{
-              fontSize: 'clamp(100px, 22vw, 320px)',
-              fontFamily: 'var(--font-cinzel), serif',
-              fontWeight: 500,
-              color: 'var(--text-secondary)',
-              textShadow: '1px 1px 0 var(--accent), 2px 2px 0 var(--accent), 3px 3px 0 var(--accent), 4px 4px 0 var(--accent), 5px 5px 0 var(--accent), 0px 20px 40px rgba(0,0,0,0.15)',
-              display: 'inline-block',
+            <div key={i} className="desov-letter" style={{
+              width: 'clamp(70px, 14vw, 200px)',
+              height: 'clamp(100px, 20vw, 280px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255, 255, 255, 0.6)',
+              borderRadius: '16px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.08), inset 0 0 30px rgba(255,255,255,0.4)',
               transformStyle: 'preserve-3d',
             }}>
-              {letter}
-            </span>
+              <span style={{
+                fontSize: 'clamp(50px, 10vw, 150px)',
+                fontFamily: 'var(--font-cinzel), serif',
+                fontWeight: 500,
+                color: 'var(--text-primary)',
+                textShadow: '0 4px 12px rgba(255,255,255,0.8)',
+              }}>
+                {letter}
+              </span>
+            </div>
           ))}
         </div>
       </div>

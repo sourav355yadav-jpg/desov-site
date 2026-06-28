@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import SmoothScroll from './components/SmoothScroll';
 import PageTransition from './components/PageTransition';
+import InteractiveBackground from './components/InteractiveBackground';
 
 const alice = Alice({
   subsets: ['latin'],
@@ -53,6 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${alice.variable} ${anton.variable} ${cinzel.variable} lenis`}>
       <body>
+        <InteractiveBackground />
         <SmoothScroll>
           <CustomCursor />
           <PageTransition />

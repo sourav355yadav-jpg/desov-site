@@ -257,7 +257,7 @@ function WorkSection() {
   };
 
   return (
-    <section ref={sectionRef} className="section" style={{ background: 'var(--bg-primary)' }}>
+    <section ref={sectionRef} className="section">
       <div className="container">
         <h2 ref={titleRef} className="section-title">Work</h2>
         <p ref={subtitleRef} className="section-subtitle" style={{ marginBottom: '60px' }}>

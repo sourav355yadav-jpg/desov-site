@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Alice, Anton } from 'next/font/google';
+import { Alice, Anton, Cinzel } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -19,6 +19,13 @@ const anton = Anton({
   variable: '--font-anton',
   display: 'swap',
   weight: ['400'],
+});
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
@@ -44,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${alice.variable} ${anton.variable} lenis`}>
+    <html lang="en" className={`${alice.variable} ${anton.variable} ${cinzel.variable} lenis`}>
       <body>
         <SmoothScroll>
           <CustomCursor />

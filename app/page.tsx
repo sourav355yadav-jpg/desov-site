@@ -153,7 +153,7 @@ function HeroSection() {
           {['D', 'E', 'S', 'O', 'V'].map((letter, i) => (
             <span key={i} className="desov-letter" style={{
               fontSize: 'clamp(100px, 22vw, 320px)',
-              fontFamily: 'var(--font-anton), sans-serif',
+              fontFamily: 'var(--font-cinzel), serif',
               fontWeight: 500,
               color: 'var(--text-secondary)',
               textShadow: '1px 1px 0 var(--accent), 2px 2px 0 var(--accent), 3px 3px 0 var(--accent), 4px 4px 0 var(--accent), 5px 5px 0 var(--accent), 0px 20px 40px rgba(0,0,0,0.15)',

@@ -3,7 +3,7 @@
 /* ===== SOHub Design System Tokens ===== */
 :root {
   /* Pink, Cream, & White Palette */
-  --bg-primary: #ffffff; /* Pure White */
+  --bg-primary: #F7F5F2; /* Subtle Warm Cream */
   --bg-secondary: #111827; /* Sections/Footer (Very Dark Blue) */
   --text-on-secondary: #ffffff; /* White text for dark backgrounds */
   --bg-card: #F9F9F9; /* Slight off-white for cards */
@@ -96,12 +96,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-title {
-  font-family: var(--font-anton), sans-serif;
-  font-size: clamp(48px, 8vw, 120px);
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.01em; /* Serif looks better with slightly less tight tracking */
+  font-family: var(--font-cinzel), serif;
+  font-size: clamp(24px, 3vw, 48px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
+  text-align: center;
 }
 
 .section-title {
@@ -128,10 +129,21 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   color: var(--text-secondary);
   transition: color 0.3s ease;
+  position: relative;
 }
 
 .nav-link:hover {
   color: var(--accent);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
 }
 
 /* ===== Layout ===== */
@@ -336,11 +348,13 @@ h1, h2, h3, h4, h5, h6 {
   height: 100vh;
   min-height: 600px;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 0 var(--section-padding-x);
-  padding-bottom: 80px;
   overflow: hidden;
   background: var(--bg-primary);
+  text-align: center;
 }
 
 .hero-render {

@@ -57,7 +57,6 @@ export default function Navbar() {
               <Link
                 href={link.href}
                 className={`nav-link ${pathname === link.href ? 'active' : ''}`}
-                style={pathname === link.href ? { color: 'var(--accent)' } : {}}
               >
                 {link.label}
               </Link>

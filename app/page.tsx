@@ -68,51 +68,12 @@ function HeroSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Background Orbs Animation
-      gsap.to('.hero-orb-1', {
-        rotation: 360,
-        x: 100,
-        y: 50,
-        duration: 20,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-      gsap.to('.hero-orb-2', {
-        rotation: -360,
-        x: -100,
-        y: -50,
-        duration: 25,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-
-      // 3D scatter setup for the DESOV glass blocks
-      const letters = gsap.utils.toArray('.desov-letter');
-      
-      gsap.set(letters, {
-        x: () => gsap.utils.random(-800, 800),
-        y: () => gsap.utils.random(-600, 600),
-        z: () => gsap.utils.random(-1200, 1000),
-        rotationX: () => gsap.utils.random(-360, 360),
-        rotationY: () => gsap.utils.random(-360, 360),
-        rotationZ: () => gsap.utils.random(-180, 180),
+      // Wordmark fade in
+      gsap.from('.desov-wordmark', {
+        y: 40,
         opacity: 0,
-      });
-
-      // Animate them snapping perfectly together
-      gsap.to(letters, {
-        x: 0,
-        y: 0,
-        z: 0,
-        rotationX: 0,
-        rotationY: 0,
-        rotationZ: 0,
-        opacity: 1,
-        duration: 2.8,
-        stagger: 0.12,
-        ease: 'power4.out',
+        duration: 1.2,
+        ease: 'power3.out',
         delay: 0.2,
       });
 
@@ -124,19 +85,8 @@ function HeroSection() {
       });
 
       // Hero parallax on scroll
-      gsap.to('.hero-render-wrapper', {
-        y: () => window.innerHeight * -0.4,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-
-      gsap.to('.hero-text-wrapper', {
-        y: () => window.innerHeight * -0.2,
+      gsap.to('.hero-content-wrapper', {
+        y: () => window.innerHeight * -0.3,
         ease: 'none',
         scrollTrigger: {
           trigger: heroRef.current,
@@ -161,62 +111,22 @@ function HeroSection() {
 
   return (
     <section ref={heroRef} className="hero">
-      <div className="hero-render-wrapper" style={{
-        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-        width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none',
-        perspective: '2000px',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      <div className="hero-content-wrapper" style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        zIndex: 2, gap: '24px'
       }}>
-        {/* Abstract Background Orbs for Glass Refraction */}
-        <div className="hero-orb-1" style={{
-          position: 'absolute', top: '20%', left: '30%',
-          width: '40vw', height: '40vw',
-          background: 'radial-gradient(circle, var(--accent) 0%, transparent 60%)',
-          filter: 'blur(60px)', opacity: 0.4, zIndex: 0,
-        }} />
-        <div className="hero-orb-2" style={{
-          position: 'absolute', bottom: '10%', right: '25%',
-          width: '50vw', height: '50vw',
-          background: 'radial-gradient(circle, var(--text-secondary) 0%, transparent 60%)',
-          filter: 'blur(80px)', opacity: 0.15, zIndex: 0,
-        }} />
-
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(10px, 2vw, 30px)',
-          transformStyle: 'preserve-3d', zIndex: 1,
-        }}>
-          {['D', 'E', 'S', 'O', 'V'].map((letter, i) => (
-            <div key={i} className="desov-letter" style={{
-              width: 'clamp(70px, 14vw, 200px)',
-              height: 'clamp(100px, 20vw, 280px)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'rgba(255, 255, 255, 0.2)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255, 255, 255, 0.6)',
-              borderRadius: '16px',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.08), inset 0 0 30px rgba(255,255,255,0.4)',
-              transformStyle: 'preserve-3d',
-            }}>
-              <span style={{
-                fontSize: 'clamp(50px, 10vw, 150px)',
-                fontFamily: 'var(--font-cinzel), serif',
-                fontWeight: 500,
-                color: 'var(--text-primary)',
-                textShadow: '0 4px 12px rgba(255,255,255,0.8)',
-              }}>
-                {letter}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Hero Text */}
-      <div className="hero-content hero-text-wrapper">
-        <h1 ref={titleRef} className="hero-title">
-          Your story builds our history.
-        </h1>
+        <h1 className="desov-wordmark" style={{
+           fontFamily: 'var(--font-cinzel), serif',
+           fontSize: 'clamp(60px, 18vw, 250px)',
+           fontWeight: 400,
+           lineHeight: 0.9,
+           letterSpacing: '-0.02em',
+           color: 'var(--text-primary)',
+        }}>DESOV</h1>
+        
+        <h2 ref={titleRef} className="hero-title">
+          Design that commands rooms.
+        </h2>
       </div>
 
       {/* Scroll Indicator */}

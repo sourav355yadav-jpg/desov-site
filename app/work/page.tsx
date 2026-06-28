@@ -53,27 +53,6 @@ function HeroSection() {
 
   return (
     <section ref={heroRef} className="hero">
-      <div className="hero-render-wrapper" style={{
-        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-        width: '65vw', maxWidth: '1000px', zIndex: 1, pointerEvents: 'none',
-      }}>
-        <div style={{
-          width: '100%', aspectRatio: '16/10',
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(221,167,165,0.1) 0%, transparent 60%)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '40px',
-        }}>
-          {[0, 1, 2].map((i) => (
-            <div key={i} style={{
-              width: '60px', height: '200px',
-              background: `linear-gradient(180deg, #DDA7A5 0%, #F1E9DA ${60 + i * 10}%)`,
-              borderRadius: '30px 30px 4px 4px',
-              transform: `rotate(${(i - 1) * 8}deg)`,
-              opacity: 0.7,
-            }} />
-          ))}
-        </div>
-      </div>
-
       <div className="hero-content hero-text-wrapper">
         <h1 ref={titleRef} className="hero-title">It really speaks for itself.</h1>
       </div>

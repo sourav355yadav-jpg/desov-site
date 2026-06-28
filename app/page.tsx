@@ -13,12 +13,12 @@ gsap.registerPlugin(ScrollTrigger);
    PROJECT DATA
    ============================================================ */
 const PROJECTS = [
-  { name: 'Keopi', slug: 'keopi', image: '/projects/keopi_mockup_2_isometric_1781775402823.png' },
-  { name: 'Earth Brew', slug: 'earth-brew', image: '/projects/earth-brew/WhatsApp Image 2026-05-01 at 12.13.03 PM.jpeg' },
-  { name: 'Sleepy Owl', slug: 'sleepy-owl', image: '/projects/sleepy_owl_poster_one.png' },
-  { name: 'Subko', slug: 'subko', image: '/projects/subko_poster_one.png' },
-  { name: 'Sol Sage', slug: 'sol-sage', image: '/projects/sol_sage_poster_one.png' },
-  { name: 'Pascati', slug: 'pascati-chocolate', image: '/projects/pascati_chocolate.png' },
+  { name: 'Keopi', slug: 'keopi', image: '/projects/keopi_mockup_2_isometric_1781775402823.png', category: 'Brand Identity' },
+  { name: 'Earth Brew', slug: 'earth-brew', image: '/projects/earth-brew/WhatsApp Image 2026-05-01 at 12.13.03 PM.jpeg', category: 'Packaging Design' },
+  { name: 'Sleepy Owl', slug: 'sleepy-owl', image: '/projects/sleepy_owl_poster_one.png', category: 'Brand Identity' },
+  { name: 'Subko', slug: 'subko', image: '/projects/subko_poster_one.png', category: 'Smart Development' },
+  { name: 'Sol Sage', slug: 'sol-sage', image: '/projects/sol_sage_poster_one.png', category: 'Marketing Campaigns' },
+  { name: 'Pascati', slug: 'pascati-chocolate', image: '/projects/pascati_chocolate.png', category: 'Packaging Design' },
 ];
 
 const SERVICES = [
@@ -171,7 +171,7 @@ function WorkSection() {
       <div className="container">
         <h2 ref={titleRef} className="section-title">Work</h2>
         <p ref={subtitleRef} className="section-subtitle" style={{ marginBottom: '60px' }}>
-          We are a diligent team, that&apos;s passionate about turning ideas into digital realities.
+          Selected projects. Each one built from a brief, not a template.
         </p>
 
         <ul ref={listRef} className="work-list">
@@ -184,8 +184,13 @@ function WorkSection() {
                 onMouseMove={(e) => handleMouseMove(e, project.image)}
                 onMouseLeave={() => setHoverImg(null)}
               >
-                <span>{project.name}</span>
-                <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>→</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+                  <span>{project.name}</span>
+                  <span className="work-list-category">{project.category}</span>
+                </div>
+                <div className="work-list-cue-container">
+                  <span className="work-list-cue-text">View Project</span>
+                </div>
               </Link>
             </li>
           ))}

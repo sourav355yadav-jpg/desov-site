@@ -305,71 +305,76 @@ function ProjectGallery({ gallery }: { gallery: (string | { src: string; wide?: 
     };
   }, [selectedImage]);
 
+  // Separate wide and regular images while preserving order
+  const wideItems = gallery.filter((item): item is { src: string; wide?: boolean } => typeof item === 'object' && !!item.wide);
+  const regularItems = gallery.filter((item) => typeof item === 'string' || (typeof item === 'object' && !item.wide));
+
   return (
     <>
       <section className="section" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '24px',
-        }}>
-          {gallery.map((item, i) => {
-            const src = typeof item === 'string' ? item : item.src;
-            const isWide = typeof item === 'object' && item.wide;
+        <div className="container">
+          {/* Wide images — each takes full width, no grid */}
+          {wideItems.map((item, i) => (
+            <div
+              key={`wide-${i}`}
+              style={{
+                width: '100%',
+                marginBottom: '24px',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                cursor: 'none',
+              }}
+              data-cursor-label="View"
+              onClick={() => setSelectedImage(item.src)}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.src}
+                alt="Project Image"
+                style={{ width: '100%', height: 'auto', display: 'block', transition: 'transform 0.4s ease' }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              />
+            </div>
+          ))}
 
-            if (isWide) {
-              return (
-                <div
-                  key={i}
-                  style={{
-                    gridColumn: '1 / -1',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                    cursor: 'none',
-                  }}
-                  data-cursor-label="View"
-                  onClick={() => setSelectedImage(src)}
-                >
-                  <Image
-                    src={src}
-                    alt="Project Image"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: '100%', height: 'auto', display: 'block', transition: 'transform 0.4s ease' }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  />
-                </div>
-              );
-            }
-
-            return (
-              <div
-                key={i}
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  aspectRatio: '4/5',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  cursor: 'none',
-                }}
-                data-cursor-label="View"
-                onClick={() => setSelectedImage(src)}
-              >
-                <Image
-                  src={src}
-                  alt="Project Image"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                />
-              </div>
-            );
-          })}
+          {/* Regular images — 2 column grid */}
+          {regularItems.length > 0 && (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '24px',
+            }}>
+              {regularItems.map((item, i) => {
+                const src = typeof item === 'string' ? item : item.src;
+                return (
+                  <div
+                    key={`reg-${i}`}
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      aspectRatio: '4/5',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      cursor: 'none',
+                    }}
+                    data-cursor-label="View"
+                    onClick={() => setSelectedImage(src)}
+                  >
+                    <Image
+                      src={src}
+                      alt="Project Image"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 

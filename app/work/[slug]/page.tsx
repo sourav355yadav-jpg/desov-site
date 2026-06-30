@@ -15,7 +15,7 @@ const PROJECTS: Record<string, {
   services: { category: string; items: string[] }[];
   description: string[];
   hero: string;
-  gallery: string[];
+  gallery: (string | { src: string; wide?: boolean })[];
   websiteLink?: string;
   next: string;
 }> = {
@@ -31,10 +31,11 @@ const PROJECTS: Record<string, {
     ],
     hero: '/projects/keopi/keopi_mockup_2_isometric_1781775402823.png',
     gallery: [
-      '/projects/keopi/Screenshot 2026-06-18 142810.png',
-      '/projects/keopi/Screenshot 2026-06-18 142830.png',
-      '/projects/keopi/Screenshot 2026-06-18 142902.png',
-      '/projects/keopi/Screenshot 2026-06-18 142913.png',
+      { src: '/projects/keopi/Screenshot 2026-06-18 142902.png', wide: true },
+      { src: '/projects/keopi/Screenshot 2026-06-18 142810.png', wide: true },
+      { src: '/projects/keopi/Screenshot 2026-06-18 142830.png', wide: true },
+      { src: '/projects/keopi/Screenshot 2026-06-18 142913.png', wide: true },
+      { src: '/projects/keopi/pattern.png', wide: true },
       '/projects/keopi/Screenshot 2026-06-18 142956.png',
       '/projects/keopi/Screenshot 2026-06-18 143014.png',
       '/projects/keopi/Screenshot 2026-06-18 143024.png',
@@ -48,7 +49,6 @@ const PROJECTS: Record<string, {
       '/projects/keopi/Gemini_Generated_Image_6kcizl6kcizl6kci.png',
       '/projects/keopi/Gemini_Generated_Image_t4vk15t4vk15t4vk.png',
       '/projects/keopi/Untitled-1.jpg',
-      '/projects/keopi/pattern.png',
     ],
     next: 'earth-brew',
   },
@@ -291,7 +291,7 @@ function ProjectDescription({ project }: { project: typeof PROJECTS[string] }) {
 }
 
 /* ── PROJECT GALLERY ── */
-function ProjectGallery({ gallery }: { gallery: string[] }) {
+function ProjectGallery({ gallery }: { gallery: (string | { src: string; wide?: boolean })[] }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -310,34 +310,66 @@ function ProjectGallery({ gallery }: { gallery: string[] }) {
       <section className="section" style={{ background: 'var(--bg-primary)' }}>
         <div className="container" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
+          gridTemplateColumns: 'repeat(2, 1fr)',
           gap: '24px',
         }}>
-          {gallery.map((img, i) => (
-            <div 
-              key={i} 
-              style={{ 
-                position: 'relative', 
-                width: '100%', 
-                aspectRatio: '4/5', 
-                borderRadius: '8px', 
-                overflow: 'hidden',
-                cursor: 'none'
-              }}
-              data-cursor-label="View"
-              onClick={() => setSelectedImage(img)}
-            >
-              <Image 
-                src={img} 
-                alt="Project Image" 
-                fill 
-                sizes="(max-width: 768px) 100vw, 50vw" 
-                style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }} 
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              />
-            </div>
-          ))}
+          {gallery.map((item, i) => {
+            const src = typeof item === 'string' ? item : item.src;
+            const isWide = typeof item === 'object' && item.wide;
+
+            if (isWide) {
+              return (
+                <div
+                  key={i}
+                  style={{
+                    gridColumn: '1 / -1',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    cursor: 'none',
+                  }}
+                  data-cursor-label="View"
+                  onClick={() => setSelectedImage(src)}
+                >
+                  <Image
+                    src={src}
+                    alt="Project Image"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{ width: '100%', height: 'auto', display: 'block', transition: 'transform 0.4s ease' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                </div>
+              );
+            }
+
+            return (
+              <div
+                key={i}
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  aspectRatio: '4/5',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  cursor: 'none',
+                }}
+                data-cursor-label="View"
+                onClick={() => setSelectedImage(src)}
+              >
+                <Image
+                  src={src}
+                  alt="Project Image"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                />
+              </div>
+            );
+          })}
         </div>
       </section>
 

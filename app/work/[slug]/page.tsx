@@ -31,6 +31,7 @@ const PROJECTS: Record<string, {
     ],
     hero: '/projects/keopi/keopi_mockup_2_isometric_1781775402823.png',
     gallery: [
+      { src: '/projects/keopi/keopi_logo_new.png', wide: true },
       { src: '/projects/keopi/Screenshot 2026-06-18 142902.png', wide: true },
       { src: '/projects/keopi/Screenshot 2026-06-18 142810.png', wide: true },
       { src: '/projects/keopi/Screenshot 2026-06-18 142830.png', wide: true },

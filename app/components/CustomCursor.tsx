@@ -12,6 +12,7 @@ export default function CustomCursor() {
 
   useEffect(() => {
     // Reset cursor state on route change
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLabel('');
     if (labelRef.current) {
       gsap.to(labelRef.current, { scale: 0, opacity: 0, duration: 0.2 });

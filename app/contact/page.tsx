@@ -80,6 +80,7 @@ function ContactFormSection() {
     else if (hour < 17) timeOfDay = 'afternoon';
     else timeOfDay = 'evening';
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setGreeting(`Hey there! How can we assist you on this ${timeOfDay}?`);
   }, []);
 

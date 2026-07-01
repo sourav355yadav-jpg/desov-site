@@ -754,6 +754,34 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(39, 183, 165, 0.1);
 }
 
+/* ===== Project Detail Gallery ===== */
+.project-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.project-gallery-item {
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: none;
+}
+
+.project-gallery-item--wide {
+  grid-column: 1 / -1;
+}
+
+.project-gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-gallery-item:hover img {
+  transform: scale(1.02);
+}
+
 /* ===== Project Grid ===== */
 .project-grid {
   display: grid;
@@ -1058,7 +1086,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
-  .project-grid {
+  .project-grid,
+  .project-gallery-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -308,29 +308,20 @@ function ProjectGallery({ gallery }: { gallery: (string | { src: string; wide?: 
   return (
     <>
       <section className="section" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="container project-gallery-grid">
           {gallery.map((item, i) => {
             const src = typeof item === 'string' ? item : item.src;
+            const isWide = typeof item === 'object' && item.wide;
+
             return (
               <div
                 key={i}
-                style={{
-                  width: '100%',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  cursor: 'none',
-                }}
+                className={`project-gallery-item${isWide ? ' project-gallery-item--wide' : ''}`}
                 data-cursor-label="View"
                 onClick={() => setSelectedImage(src)}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt="Project Image"
-                  style={{ width: '100%', height: 'auto', display: 'block', transition: 'transform 0.4s ease' }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                />
+                <img src={src} alt="Project Image" />
               </div>
             );
           })}
